@@ -1,0 +1,292 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title> Home page </title>
+        <script type="text/javascript">
+         function Validate()
+       {
+         var audio =document.getElementById("audio").value;
+        
+            var aud = document.getElementById("audio"); 
+            alert(aud.files[0].size);
+            if(aud.files[0].size >  10485760)  // validation according to file size
+            {
+            document.getElementById("errorName5").innerHTML="Audio file size exceeds 10MB";
+            return false;
+             }
+             return true;
+      }
+
+        </script>
+       
+    </head>
+<body>
+    <header class="jumbotron bg-dark">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-3 align-self-center">
+                    <img src="assets/logo 2.jpg" class="img-fluid">
+                </div>
+                
+                <div class="col-12 col-sm-6 text-light" align="center">
+                    <h1>Find a perfect concert where ever you are..!! </h1>
+                    <p><font face="comic sans ms">Let music flow in your heart <i class="fa fa-heart-o" aria-hidden="true"></i> and enrich your soul </font> </p>
+                </div>
+               
+                <div class="col-12 col-sm-3 align-self-center">
+                    <div class="form-group row">                     
+                       <button class="btn btn-block btn-warning text-dark" data-toggle="modal" data-target="#concertbook"> 
+                       <strong> Book a Concert &nbsp; &nbsp;<i class="fa fa-music" aria-hidden="true"></i>
+                    </strong> </button> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+
+    <div class="modal fade" id="concertbook" role="dialog">
+        <div class="modal-dialog modal-lg" role="content">
+            <div class="modal-content">
+              <div class="modal-header bg-warning">
+               <h4 class="modal-title"> Book a Concert &nbsp; <i class="fa fa-volume-up" aria-hidden="true"></i> </h4> 
+               <button type="button" class="close btn-danger" data-dismiss="modal">
+                 &times; 
+                </button>
+              </div>
+              <div class="modal-body">
+                <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+                    <div class="row">
+                        <div class="col-12 col-sm-2 offset-0">
+                            Name 
+                        </div>
+                        <div class="col-8 col-sm-auto justify-content-center">
+                            <div class="row">
+                                <div class="col-12 col-sm-6"> 
+                                  <div class="form-group"> 
+                                    <input type="text"  class="form-control" placeholder="First Name" formControlName="firstName" [ngClass]="{'is-invalid':form.get('firstName').touched && form.get('firstName').invalid}" required />
+                                    <div class="invalid-feedback">
+                                      <div class="alert alert-danger">First Name is required</div>
+                                    </div>
+                                  </div>
+
+                                  </div> 
+                                  
+                                  <div class="col-12 col-sm-6">
+                                  <div class="form-group">
+                                    <input type="text"  class="form-control" placeholder="Last Name"  formControlName="lastName" [ngClass]="{'is-invalid':form.get('lastName').touched && form.get('lastName').invalid}" required />
+                                      <div class="invalid-feedback">
+                                       <div class="alert alert-danger">Last Name is required</div>
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="row">
+                        <div class="col-12 col-sm-2">
+                            Age  
+                        </div>
+
+                     <div class="col-8 col-sm-3">
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Enter Age" name="age" formControlName="age" [ngClass]="{'is-invalid':form.get('age').touched && form.get('age').invalid}" />
+                            <div *ngIf="form.get('age').touched && form.get('age').dirty && form.get('age').invalid"  class="invalid-feedback">
+                              <div class="alert alert-danger" *ngIf="form.get('age').errors.required">Age is required</div>
+                              <div class="alert alert-danger" *ngIf="form.get('age').errors.min"> Age should be {{min}} to {{ max}} years!</div>   
+                        </div>
+                     </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-2">
+                            Email  
+                        </div>
+
+                     <div class="col-8 col-sm-5">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Enter Email" formControlName="email" [ngClass]="{'is-invalid':form.get('email').touched && form.get('email').invalid}">
+                            <div  *ngIf="form.get('email').touched && form.get('email').invalid"  class="invalid-feedback">
+                              <div class="alert alert-danger" *ngIf="form.get('email').errors.required">Email is required</div>
+                              <div class="alert alert-danger" *ngIf="form.get('email').errors.email">Email must be a valid email Address</div>
+                            </div>
+                     </div>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-2">
+                            Upload Music  
+                        </div>
+
+                     <div class="col-8 col-sm-4">
+                        <div class="form-group">
+                            <input type="file" class="form-control-file btn btn-secondary" accept=".mp3,.wav,.flac" id="audio" name="audio" formControlName="audio" [ngClass]="{'is-valid':form.get('audio').touched && form.get('audio').invalid}" required/>
+                            <div class="alert alert-danger" *ngIf="form.get('audio').touched && form.get('audio').invalid"  class="invalid-feedback">
+                                <div *ngIf="form.get('audio').errors.required">Audio File is required</div>
+                                <div *ngIf="form.get('audio').errors.max">Audio File size should not be greater than 10MB!</div>
+                              </div>
+                        </div>
+                    </div>
+                    </div>              
+                    <br>
+                      <div class="row">
+                         <div class="col-sm-auto offset-2"> 
+                            <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="onSubmit()" id="submit" name="submit"> Book Now </button> &nbsp;
+                            <button type="button" class="btn btn-secondary ml-auto" data-dismiss="modal">Cancel</button> 
+                                
+                      </div>
+                    </div>
+                    
+                    <div [hidden]="!form.valid">
+                        {{ form.value }} 
+                       <!-- {{ firstName.value }} {{ lastName.value }}   {{ age.value }}   {{ email.value }} {{ audio.value }} -->
+                    </div>
+             </form> 
+
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-content ">
+         <div class="col-12">
+             <div id="mycarousel" class="carousel slide" data-ride="carousel">
+               <div class="carousel-inner" role="listbox">
+                 
+                <div class="carousel-item active">
+                    <img class="d-block img-fluid" src="https://i.gifer.com/YKUd.gif" width="100%" alt="mumbai">
+                    <div class="carousel-caption d-none d-md-block">
+                    <h2 class="text-dark"> Mumbai Concert <span class="badge badge-danger">HOT</span></h2>
+                    <p class="d-none d-sm-block"><span style="background-color: rgb(51, 51, 51);" class="text-light">Andheri East, Live by Arjit Singh on 25th Feb, 2020. Sponsered by MTV show.</span> </p>        
+                   
+                  </div>
+                 </div>
+
+                 <div class="carousel-item">
+                  <img class="d-block img-fluid" src="https://thumbs.gfycat.com/AnimatedTheseBlacklab-size_restricted.gif" height="100%" width="100%" alt="delhi">
+                   <div class="carousel-caption d-none d-md-block">
+                    <h2 class="text-light">Delhi  <span class="badge badge-danger">NEW</span> </h2>
+                    <p class="d-none d-sm-block"><span style="background-color: rgb(51,51,51);" class="text-light"> Featuring Neha Kakkar, Recently Live on Coke Studio at Delhi on 20th March,2020 </span> </p>        
+                    
+                   </div>
+                </div>
+                <div class="carousel-item">
+                 <img class="img-fluid d-block" src="https://mix247edm.com/wp-content/uploads/2020/04/94428425_3521854067829420_2161525145926107136_o.jpg" width="100%" height="40%">
+                 <div class="carousel-caption d-none d-md-block ">
+                    <h2 class="text-dark">Hyderabad <span class="badge badge-danger">HOT</span> </h2>
+                    <p class="d-none d-sm-block"><span style="background-color: rgb(50, 50, 51);" class="text-light"> Marshmellow show at exclusively on Hyderabad on 12th April, 2020 at Ramoji Film City. </span> </p>    
+                 </div>
+                </div>
+               </div>
+                <ol class="carousel-indicators">
+                    <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#mycarousel" data-slide-to="1" > </li>
+                    <li data-target="#mycarousel" data-slide-to="2" > </li>
+                </ol>
+
+                <a class="carousel-control-prev" href="#mycarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon"> </span>
+                </a>
+
+                <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon"> </span>
+                </a>
+          </div>
+         </div>
+        </div><br>
+
+        <div class="row">
+        <div class="col-12 col-sm-12">
+          <h3 class="text-dark badge-warning" align="center"><i class="fa fa-certificate" aria-hidden="true"></i> &nbsp;
+            <font face="monospace">"Free Food" for booking the concert, Hurry Up! Only few tickets are left..!!</font></h3>
+        </div>
+        </div> <br> <br>
+
+      
+        <div class="col-12 col-sm col-md">
+            <div class="media">
+                <div clas="media-body">
+                    <h2>Weekend Grand Buffet <span class="badge badge-danger">NEW</span></h2>
+                    <p class="d-none d-sm-block">Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person </p>
+                </div>
+                <img class="d-flex mr-3 img-thumbnail align-self-center" height="300" width="300" src="https://restaurantindia.s3.ap-south-1.amazonaws.com/s3fs-public/content6118.jpg" alt="Buffet">
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-content align-items-center">
+        <div class="col-12 col-sm-4 order-sm-last col-md-3">
+            <h3>Meet our Culinary Specialists</h3>
+        </div>
+        
+        <div class="col-12 col-sm-8 order-sm-first col-md">
+            <div class="media">
+            
+                <img class="d-flex mr-3 img-thumbnail align-self-center"  height="300" width="300" src="https://images.assetsdelivery.com/compings_v2/dolgachov/dolgachov1906/dolgachov190601937.jpg" alt="Alberto Somayya"> 
+            
+                <div class="media-body">
+                    <h2 class="mt-0">Alberto Somayya</h2>
+                    <h4>Executive Chef</h4>
+                    <p class="d-none d-sm-block">Award winning three-star Michelin chef with wide International experience having worked closely with whos-who in the culinary world, he specializes in creating mouthwatering Indo-Italian fusion experiences. </p>
+                </div>
+            </div>
+        </div>
+    
+
+
+
+    </div> <!-- container close -->
+  
+    <footer class="footer">
+        <div class="container">
+            <div class="row">             
+                <div class="col-4 offset-1 col-sm-2">
+                    <h5>Our concerts</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.youtube.com/watch?v=1UF6NZxerS0&t=468s" target="_blank">Mumbai</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=t3bS1XHyfC0" target="_blank">Delhi</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=joFwOg8fy3Y" target="_blank">Hyderabad</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=KbWbK2qRe7U" target="_blank">Chennai</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=yl5LSMD6rMM" target="_blank">Kolkata </a></li>
+                    </ul>
+                </div>
+                <div class="col-7 col-sm-5">
+                    <h5>Our Address</h5>
+                    <address>
+                      Resident no:2/2-21,Road no: 12,<br>
+                       Banjara hills, Hyderabad<br>
+		              Telangana, India<br>
+		              
+		              <i class="fa fa-phone fa-lg"> </i><a href="tel:+919812457658"> : +91 98124 57658 </a><br>
+		              <i class="fa fa-envelope fa-lg"> </i> : <a href="mailto:sudheer.madisetty111@gmail.com">sudheer.madisetty111@gmail.com</a>
+		           </address>
+                </div>
+                <div class="col-12 col-sm-4 align-self-center">
+                    <div class="text-center">
+                        <a class="btn btn-social-icon btn-google" target="_blank" href="http://google.com/+"><i class="fa fa-google-plus fa-lg"> </i></a>
+                        <a class="btn btn-social-icon btn-facebook" target="_blank" href="http://www.facebook.com/profile.php?id="> <i class="fa fa-facebook fa-lg"> </i> </a>
+                        <a class="btn btn-social-icon btn-linkedin" target="_blank" href="http://www.linkedin.com/in/"> <i class="fa fa-linkedin fa-lg"> </i> </a>
+                        <a class="btn btn-social-icon btn-twitter" target="_blank" href="http://twitter.com/"> <i class="fa fa-twitter fa-lg"> </i> </a>
+                        <a class="btn btn-social-icon btn-google" target="_blank" href="http://youtube.com/"> <i class="fa fa-youtube fa-lg"> </i> </a>
+                        <a class="btn btn-social-icon" target="_blank" href="mailto:"> <i class="fa fa-envelope fa-lg"> </i> </a>
+                    </div>
+                </div>
+           </div> <br>
+           <div class="row justify-content-center">             
+                <div class="col-auto col-sm-auto">
+                    <p>© Copyright 2020 Sudhir Madisetty</p>
+                </div>
+           </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
